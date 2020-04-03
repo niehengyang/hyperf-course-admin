@@ -3,11 +3,10 @@
  * 导入Vue 及 Vue Router
  *
  */
-// window.Vue = require('vue'); //引入Vue
 import Vue from 'vue'
 
-import VueRouter from 'vue-router'; //引入vue-router
-Vue.use(VueRouter); //使用vue-router
+import baseVueRouter from 'vue-router'; //引入vue-router
+Vue.use(baseVueRouter); //使用vue-router
 
 /**
  *

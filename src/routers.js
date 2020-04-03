@@ -1,14 +1,15 @@
+
 import VueRouter from 'vue-router';
 
 /* 初始路由模块 */
 let routeArray = [
     {
-        path: '/'
-    }
+        path: '/',
+    },
 ];
 
 /* 加载路由模块 */
-import AccountRouterArray from '../routers/AccountRouter';
+import AccountRouterArray from './routers/AccountRouter';
 
 
 
