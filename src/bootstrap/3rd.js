@@ -5,6 +5,7 @@
  */
 // window.Vue = require('vue'); //引入Vue
 import Vue from 'vue'
+
 import VueRouter from 'vue-router'; //引入vue-router
 Vue.use(VueRouter); //使用vue-router
 
