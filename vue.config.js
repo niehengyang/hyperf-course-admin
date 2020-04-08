@@ -5,15 +5,11 @@ module.exports = {
 
     //防止eslint乱报错
     lintOnSave: false, // 关闭eslint
+    runtimeCompiler: true,
     publicPath: '/',
     outputDir: 'dist',
     configureWebpack: {
-        externals: {
-            vue: "Vue",
-            "element-ui": "ElementUI",
-            "vue-router": "VueRouter",
-            vuex: "Vuex"
-        }
+
     },
     devServer: {
         //devServer监听的端口
@@ -24,13 +20,15 @@ module.exports = {
             //拦截的url
             '/api':{
                 //转发到目标服务器的url
-                target: "http://hyperf-admin.com",
+                target: "http://192.168.10.10:9501/",
                 //是否代理websockets,可选
                 ws: true,
                 //是否修改Host头部，可选
-                changeOrgin: true,
+                changeOrigin: true,
                 //修改请求路径
-                pathRewrite: {'/api':''}
+                pathRewrite: {
+                    '^/api': ''
+                }
             }
         }
     },
@@ -56,6 +54,13 @@ module.exports = {
             filename: 'home.html',
             title: '首页',
             chunks: ['chunk-vendors', 'chunk-common', 'home']
+        },
+        error404: {
+            entry: 'src/404error/main.js',
+            template: 'public/error404.html',
+            filename: 'error404.html',
+            title: '页面未找到',
+            chunks: ['chunk-vendors', 'chunk-common', 'error404']
         }
     }
 

@@ -1,4 +1,4 @@
-const TokenStorageKey = (window.location.hostname || "smtmonitor") + "_token";
+const TokenStorageKey = (window.location.hostname || "hyperf_web") + "_token";
 
 let setToken = function (token) {
     return localStorage.setItem(TokenStorageKey , token);

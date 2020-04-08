@@ -6,11 +6,14 @@ require("../bootstrap/3rd.js");
 /**
  * 如果用户已经有Token则跳转到管理网站中
  */
-import TokenFactory from "../assets/tokenfactory";
+import TokenFactory from "../assets/utils/tokenfactory";
 
 if(TokenFactory.getToken()){
-    window.location.href = "/admin/";
+    window.location.href = "/";
 }
+
+axios.defaults.timeout = 5000; // 请求超时
+axios.defaults.baseURL = '/api/'; // vue.config.js 中配置的地址
 
 import LoginForm from './Login.vue'
 import baseVueRouter from "vue-router";
