@@ -194,7 +194,7 @@
                         if (pwd){
                             this.loginForm.password = pwd;
 
-                            axios.post('/user/login',this.loginForm)
+                            this.$api.restfulApi.create('user/login',this.loginForm)
                                 .then( (res) =>{
                                     if (res.data.code == 500){
                                         // 打印错误信息
