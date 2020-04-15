@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 let routeArray = [
     {
         path: '/',
+        redirect: '/menu/list'
     },
 ];
 

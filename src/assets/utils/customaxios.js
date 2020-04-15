@@ -17,7 +17,6 @@ const errorTip = msg => {
 
 //跳转到登录页
 const toLogin = ()=>{
-
     //token校验失败后 ，清除token
     Vue.prototype.$message({
         type : "error",
@@ -27,7 +26,6 @@ const toLogin = ()=>{
             window.location.href = '/login'
         }
     });
-
 };
 
 //跳转到404页面
@@ -92,6 +90,7 @@ axios.interceptors.response.use(res =>{
     if(error.response.data.message.includes('timeout')){   // 判断请求异常信息中是否含有超时timeout字符串
         errorHandler(408,error.response.data.message);
     }
+
     return Promise.reject(error);
 });
 

@@ -92,7 +92,8 @@ export default {
     'vertical-menu': VerticalMenu
   },
   created(){
-    this.initData()
+    this.initActiveMenu();
+    this.initData();
   },
   methods:{
 
@@ -123,6 +124,11 @@ export default {
     //组合菜单关闭
     handleSubmenuClose(key, keyPath){
       // console.log(key, keyPath);
+    },
+
+    //激活菜单
+    initActiveMenu(){
+      this.activeIndex = this.$route.name;
     },
 
     //菜单选中

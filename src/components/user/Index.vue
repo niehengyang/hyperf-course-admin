@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "List"
+        name: "Index"
     }
 </script>
 
