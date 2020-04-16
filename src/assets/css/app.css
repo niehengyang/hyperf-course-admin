@@ -23,6 +23,16 @@ body > .el-container {
     border: 1px solid #EBEEF5;
 }
 
+/*工具条*/
+.tool-bar{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/*表格*/
+.table-box{
+    margin-bottom: 20px;
+}
 
 /**--------------------顶部导航样式--------------------------**/
 .el-header, .el-footer {
@@ -62,4 +72,10 @@ body > .el-container {
     background-color: #E9EEF3;
     color: #333;
     text-align: center;
+}
+
+/**--------------------分页样式--------------------------**/
+.pagination-box{
+    width: 100%;
+    text-align: right;
 }

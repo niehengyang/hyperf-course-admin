@@ -243,24 +243,11 @@
 </script>
 
 <style scoped>
-    .tool-bar{
-        width: 100%;
-        margin-bottom: 20px;
-    }
     .add-btn{
         float: left;
-    }
-    .table-box{
-        width: 100%;
-        margin-bottom: 20px;
     }
     .pagination-box{
         width: 100%;
         text-align: right;
-    }
-    .add-from{
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

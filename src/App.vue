@@ -99,7 +99,11 @@ export default {
 
     initData(){
       this.$api.restfulApi.list('permission/menu').then((res)=>{
-        this.menuList = res.data;
+        if (res.data){
+          this.menuList = res.data;
+        }else{
+          this.menuList = [];
+        }
       })
     },
 

@@ -225,7 +225,7 @@
                             })
                     }else{
                         //加密错误
-                        this.form.password = oldPwd;
+                        this.loginForm.password = oldPwd;
                         this.$message({
                             message: '加密错误',
                             type: 'error'

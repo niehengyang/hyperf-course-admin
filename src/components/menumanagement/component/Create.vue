@@ -12,7 +12,7 @@
                 </el-form-item>
 
                 <el-form-item label="上级菜单" prop="parent_id">
-                    <el-select v-model="addForm.parent_id" placeholder="请选择上级菜单" @visible-change="handleMenuOption">
+                    <el-select class="form-input" v-model="addForm.parent_id" placeholder="请选择上级菜单" @visible-change="handleMenuOption">
                         <el-option v-for="permission in permissionOptions" :label="permission.display_name" :value="permission.id"></el-option>
                     </el-select>
                 </el-form-item>
