@@ -1,20 +1,21 @@
 <template>
     <el-row>
-        <div class="add-from">
-            <el-form :model="addForm" :rules="rules" ref="addForm"
+        <div class="edit-from">
+            <el-form :model="editForm" :rules="rules" ref="editForm" v-loading="formLoading"
                      label-width="100px" class="demo-ruleForm" size="small">
+
                 <el-form-item label="角色名称" prop="name">
-                    <el-input class="form-input" maxlength="20" v-model.trim="addForm.name"
+                    <el-input class="form-input" maxlength="20" v-model.trim="editForm.name"
                               onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;" placeholder="请输入名称"></el-input>
                 </el-form-item>
 
                 <el-form-item label="角色警卫" prop="guard_name">
-                    <el-input class="form-input"  maxlength="50" v-model.trim="addForm.guard_name" placeholder="请输入警卫"></el-input>
+                    <el-input class="form-input"  maxlength="50" v-model.trim="editForm.guard_name" placeholder="请输入警卫"></el-input>
                 </el-form-item>
 
                 <el-form-item label="角色状态" prop="status">
                     <el-switch
-                            v-model="addForm.status"
+                            v-model="editForm.status"
                             active-color="#13ce66"
                             inactive-color="#ff4949"
                             active-value='1'
@@ -26,7 +27,7 @@
                     <el-input class="form-input"
                               type="textarea"
                               :rows="2"
-                              v-model="addForm.description"
+                              v-model="editForm.description"
                               maxlength="200"
                               placeholder="请输入备注信息"></el-input>
                 </el-form-item>
@@ -48,8 +49,8 @@
 
         <div class="dialog-footer">
         <span style="float: right">
-            <el-button @click="handleFormClose('addForm')">取 消</el-button>
-            <el-button type="primary" @click="handleSubmitForm('addForm')" :loading="addLoading">提 交</el-button>
+            <el-button @click="handleFormClose('editForm')">取 消</el-button>
+            <el-button type="primary" @click="handleSubmitForm('editForm')" :loading="editLoading">提 交</el-button>
         </span>
         </div>
     </el-row>
@@ -57,15 +58,17 @@
 
 <script>
     export default {
-        name: "create",
+        name: "edit",
         data(){
             return{
-                addLoading: false,
-                addForm: {
+                formLoading: false,
+                editLoading: false,
+                editForm: {
                     name: '',
-                    status: '1',
-                    guard_name: '',
+                    status: '',
                     description: '',
+                    create_by: '',
+                    guard_name: '',
                     permissions: [],
                 },
                 rules: {
@@ -97,15 +100,20 @@
                 }
             }
         },
+        props:['editData','initLoading'],
 
-        props: {
-
+        created(){
+            this.editForm = this.editData;
+            this.formLoading = this.initLoading;
+            this.initPermissionData();
         },
         watch:{
-
-        },
-        created(){
-            this.initPermissionData();
+            'editData': function(){
+                this.editForm = this.editData;
+            },
+            'initLoading':function () {
+                this.formLoading = this.initLoading;
+            }
         },
         methods:{
 
@@ -114,66 +122,63 @@
                 this.$api.restfulApi.list('permission/menu').then((res)=>{
                     if (res.data){
                         this.permissionData = res.data;
+                        this.setCheckedKeys();
                     }else{
                         this.permissionData = [];
                     }
                 })
             },
 
-            //提交创建
+            //提交编辑
             handleSubmitForm(formName){
-
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-
-                        this.addLoading = true;
-                        this.$api.restfulApi.create('role/create', this.addForm).then((res) => {
+                        this.editLoading = true;
+                        this.$api.restfulApi.edit('role/edit',this.editForm.id,this.editForm).then((res)=>{
                             this.handleFormClose(formName);
                             this.$message.success({showClose: true, message: res.msg, duration: 2000});
-                            this.$emit('submitCreate', true);
+                            this.$emit('submitEdit',this.editData.type);
                         });
                     }
                 });
             },
 
-            //选中权限
-            handleCheckChange(data, checked, indeterminate) {
-               // this.checkedKeys = this.$refs.permissionTree.getCheckedKeys();
-               this.addForm.permissions = this.$refs.permissionTree.getCheckedKeys();
-               // console.log(this.checkedKeys);
-            },
-
             //关闭添加
             handleCloseAdd(){
-                this.handleFormClose('addForm');
+                this.handleFormClose('editForm');
             },
 
 
             //表单关闭
             handleFormClose(formName){
-                this.addLoading = false;
+                this.editLoading = false;
                 this.$refs[formName].resetFields();
-                this.$emit('closeAdd',formName);
-            }
+                this.$emit('closeEdit',formName);
+            },
+
+            //选中权限
+            handleCheckChange(data, checked, indeterminate) {
+                // this.checkedKeys = this.$refs.permissionTree.getCheckedKeys();
+                this.editForm.permissions = this.$refs.permissionTree.getCheckedKeys();
+                // console.log(this.checkedKeys);
+            },
+
+            //加载已含有权限
+            setCheckedKeys() {
+
+                this.$refs.permissionTree.setCheckedKeys(this.editForm.permissions);
+            },
         }
     }
 </script>
 
 <style scoped>
-    .add-from{
-        width: 100%;
+    .edit-from{
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .form-input{
         width: 260px;
-    }
-
-    .el-icon-lock {
-        cursor: pointer;
-    }
-    .el-icon-unlock{
-        cursor: pointer;
     }
 </style>

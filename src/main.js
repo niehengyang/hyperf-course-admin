@@ -21,4 +21,14 @@ import App from './App.vue'
 
 import router from './routers';
 
-new Vue(Vue.util.extend({router}, App)).$mount('#app');
+//引入Api
+import portalApi from "./assets/js/apis/portalApi";
+
+portalApi.initData().then(function (res) {
+
+    window.__login_user__ = res.data;
+
+    new Vue(Vue.util.extend({router}, App)).$mount('#app');
+});
+
+

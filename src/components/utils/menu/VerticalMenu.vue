@@ -8,7 +8,7 @@
                  @close="handleClose"
                  @select="handleMenuSelect"
                  :collapse="isCollapse">
-            <menu-item :nav-menus="menuList"></menu-item>
+            <menu-item :nav-menus="menuData"></menu-item>
         </el-menu>
     </div>
 </template>
@@ -37,12 +37,22 @@
                 }
             },
         },
+
         components:{
             'menu-item': menuItem
         },
         data(){
             return{
+                menuData: []
                 // isCollapse: false,
+            }
+        },
+        created(){
+            this.menuData = this.menuList;
+        },
+        watch:{
+            'menuList':function () {
+                this.menuData = this.menuList;
             }
         },
         methods:{

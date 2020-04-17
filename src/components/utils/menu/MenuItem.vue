@@ -1,6 +1,6 @@
 <template>
     <div class="navMenu">
-        <label v-for="menu in navMenus" :key="menu.index_value">
+        <label v-for="menu in navMenuDatas" :key="menu.index_value">
             <el-submenu :index="menu.index_value" :disabled="menu.status == 1? false:true" v-if="menu.children">
                 <template slot="title">
                     <i :class="menu.icon"></i>
@@ -29,13 +29,18 @@
         },
         data() {
             return {
-
+                navMenuDatas: [],
             }
         },
         components:{
         },
         created(){
-            // console.log(this.navMenus)
+            this.navMenuDatas = this.navMenus;
+        },
+        watch:{
+            'navMenus':function () {
+                this.navMenuDatas = this.navMenus;
+            }
         },
         methods: {}
     }

@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-row class="tool-bar">
-            <el-button type="primary" class="add-btn" @click="handleAdd">添加</el-button>
+            <el-button type="primary" size="medium" class="add-btn" @click="handleAdd">添加</el-button>
         </el-row>
 
         <el-row class="table-box">
@@ -58,7 +58,7 @@
                         width="140px">
                     <template slot-scope="scope">
                         <el-button @click="handleView(scope.row)" type="text" size="small">查看</el-button>
-                        <el-button v-if="scope.row.create_by != '0'" @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+                        <el-button v-if="scope.row.create_by != '0'" @click="handleEdit(scope.row.id)" type="text" size="small">编辑</el-button>
                         <el-button v-if="scope.row.create_by != '0'" @click="handleDelete(scope.row.id)" style="color: red" type="text" size="small">删除</el-button>
                     </template>
                 </el-table-column>
@@ -93,7 +93,7 @@
                     :visible.sync="editVisible"
                     width="50%"
                     :before-close="handleCloseEdit">
-                <!--<edit-component v-on:closeEdit="handleCloseEdit" :init-loading="editFormLoading" :edit-data="editForm" v-on:submitEdit="submitEdit"></edit-component>-->
+                <edit-component v-on:closeEdit="handleCloseEdit" :init-loading="editFormLoading" :edit-data="editForm" v-on:submitEdit="submitEdit"></edit-component>
             </el-dialog>
         </el-row>
 
@@ -102,6 +102,7 @@
 
 <script>
     import CreateComponent from './component/Create.vue';
+    import EditComponent from './component/Edit.vue';
     export default {
         name: "Index",
         data(){
@@ -115,12 +116,14 @@
 
                 addVisible:false,
                 editVisible: false,
-
+                editFormLoading: false,
+                editForm: {},
 
             }
         },
         components:{
-            'create-component': CreateComponent
+            'create-component': CreateComponent,
+            'edit-component': EditComponent,
         },
         created(){
             this.initData()
@@ -184,10 +187,20 @@
 
             //编辑
             handleEdit(id){
-
+                this.editVisible = true;
+                this.editFormLoading = true;
+                this.$api.restfulApi.item('account/item',id).then((res)=>{
+                    this.editForm = JSON.parse(JSON.stringify(res.data));
+                    this.editFormLoading = false;
+                });
             },
             //关闭编辑
             handleCloseEdit(){
+                this.editVisible = false;
+            },
+
+            //编辑完成
+            submitEdit(){
 
             },
 

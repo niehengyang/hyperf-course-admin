@@ -20,7 +20,7 @@
             </el-row>
           <el-menu background-color="#B3C0D1" mode="horizontal">
             <el-submenu index="1">
-              <template slot="title">admin</template>
+              <template slot="title">{{currentUser.name}}</template>
               <el-menu-item index="2-1">
                 <i class="el-icon-postcard"></i>
                 <span slot="title">个人信息</span>
@@ -80,6 +80,7 @@ export default {
   name: 'App',
   data(){
     return{
+      currentUser: window.__login_user__,
       pageLoading: false,
       logoutConfirmVisible: false,
       activeIndex: 'menuList',
@@ -100,7 +101,7 @@ export default {
     initData(){
       this.$api.restfulApi.list('permission/menu').then((res)=>{
         if (res.data){
-          this.menuList = res.data;
+          this.menuList = JSON.parse(JSON.stringify(res.data));
         }else{
           this.menuList = [];
         }

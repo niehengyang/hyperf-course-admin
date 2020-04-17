@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-row class="tool-bar">
-            <el-button type="primary" class="add-btn" @click="handleAdd">添加</el-button>
+            <el-button type="primary" size="medium" class="add-btn" @click="handleAdd">添加</el-button>
         </el-row>
 
         <el-row class="table-box">
@@ -33,7 +33,14 @@
                         prop="description"
                         label="描述">
                 </el-table-column>
-
+                <el-table-column
+                        prop="status"
+                        label="状态">
+                    <template slot-scope="scope">
+                        <el-tag v-if="scope.row.status == 1" type="success">正常</el-tag>
+                        <el-tag v-else type="info">禁用</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column
                         prop="created_at"
                         label="创建时间">
@@ -45,7 +52,7 @@
                         width="140px">
                     <template slot-scope="scope">
                         <el-button @click="handleView(scope.row)" type="text" size="small">查看</el-button>
-                        <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+                        <!--<el-button @click="handleEdit(scope.row.id)" type="text" size="small">编辑</el-button>-->
                         <el-button @click="handleDelete(scope.row.id)" style="color: red" type="text" size="small">删除</el-button>
                     </template>
                 </el-table-column>
@@ -80,7 +87,7 @@
                     :visible.sync="editVisible"
                     width="50%"
                     :before-close="handleCloseEdit">
-                <!--<edit-component v-on:closeEdit="handleCloseEdit" :init-loading="editFormLoading" :edit-data="editForm" v-on:submitEdit="submitEdit"></edit-component>-->
+                <edit-component v-on:closeEdit="handleCloseEdit" :init-loading="editFormLoading" :edit-data="editForm" v-on:submitEdit="submitEdit"></edit-component>
             </el-dialog>
         </el-row>
 
@@ -89,6 +96,7 @@
 
 <script>
     import CreateComponent from './component/Create.vue';
+    import EditComponent from './component/Edit.vue';
     export default {
         name: "Index",
         data(){
@@ -102,12 +110,13 @@
 
                 addVisible:false,
                 editVisible: false,
-
-
+                editFormLoading: false,
+                editForm: {},
             }
         },
         components:{
-            'create-component': CreateComponent
+            'create-component': CreateComponent,
+            'edit-component': EditComponent
         },
         created(){
             this.initData()
@@ -171,13 +180,24 @@
 
             //编辑
             handleEdit(id){
-
+                this.editVisible = true;
+                this.editFormLoading = true;
+                this.$api.restfulApi.item('role/item',id).then((res)=>{
+                    this.editForm = JSON.parse(JSON.stringify(res.data));
+                    this.editFormLoading = false;
+                });
             },
+
             //关闭编辑
             handleCloseEdit(){
-
+                this.editVisible = false;
             },
 
+            //编辑提交
+            submitEdit(){
+                this.editVisible = false;
+                this.initData();
+            },
 
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
