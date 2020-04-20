@@ -1,10 +1,12 @@
 <template>
-    <div>这里是首页</div>
+    <div>
+        图表
+    </div>
 </template>
 
 <script>
     export default {
-        name: "Home"
+        name: "LineChart"
     }
 </script>
 

@@ -139,22 +139,9 @@ export default {
     //菜单选中
     handleMenuSelect(key, keyPath){
       switch (key) {
-          case 'home':
-            window.location.href = '/home';
-            break;
-          case 'userList':
-            this.$router.push({path: '/user/list',query: ''});
-            break;
-          case 'roleList':
-            this.$router.push({path: '/role/list',query: ''});
-            break;
-          case 'menuList':
-            this.$router.push({path: '/menu/list',query: ''});
-            break;
-          case 'logList':
-            this.$router.push({path: '/log/list',query: ''});
-            break;
-        default:
+        case 'home': window.location.href = '/home';
+              break;
+        default: this.$router.push({name: key,query: ''});
       }
     }
   },

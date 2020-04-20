@@ -14,8 +14,9 @@ import AccountRouterArray from "./routers/AccountRouter";
 import MenuRouterArray from "./routers/MenuRouter";
 import RoleRouterArray from "./routers/RoleRouter";
 import LogRouterArray from "./routers/LogRouter";
+import DemoRouterArray from "./routers/DemoRouter";
 
-routeArray = routeArray.concat(AccountRouterArray,MenuRouterArray,RoleRouterArray,LogRouterArray);
+routeArray = routeArray.concat(AccountRouterArray,MenuRouterArray,RoleRouterArray,LogRouterArray,DemoRouterArray);
 
 /* 实例化Vuejs路由对象 */
 const routers = new VueRouter({
