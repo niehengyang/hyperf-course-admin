@@ -63,6 +63,7 @@ axios.interceptors.request.use(
                 'X-Requested-With': 'XMLHttpRequest'
             }
         }
+
         return config;
     },
     err => {
